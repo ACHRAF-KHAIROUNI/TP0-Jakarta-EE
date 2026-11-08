@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="css/mycsslayout.css"/>
+    <title>Message d'accueil</title>
+</h:head>
+<h:body>
+    <div class="main-container" style="max-width: 520px; margin-top: 60px;">
+        <div class="app-card" style="text-align: center; padding: 35px 25px;">
+            <div style="font-size: 40px; margin-bottom: 15px;">🎉</div>
+            <h2 style="color: #1e293b; margin: 0 0 10px 0;">Bonjour #{utilisateur.nom} !</h2>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 30px;">
+                Bienvenue dans l'application Jakarta EE TP0.
+            </p>
+
+            <h:form>
+                <h:commandButton value="⬅ Revenir au formulaire" action="presentation" styleClass="btn-action"/>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

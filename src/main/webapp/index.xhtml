@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="css/mycsslayout.css"/>
+    <h:outputScript name="js/script.js" target="head"/>
+    <title>Espace Conversation - TP0</title>
+</h:head>
+<h:body>
+    <f:view>
+        <div class="main-container">
+            <div class="app-card">
+                <!-- En-tête principal -->
+                <div class="app-header">
+                    <h2 class="app-title">💬 Assistant Conversationnel - TP0 Jakarta EE</h2>
+                    <span style="font-size: 13px; color: #64748b;">Auteur : Achraf Khairouni</span>
+                </div>
+
+                <!-- Affichage des alertes et messages d'erreur globaux -->
+                <h:messages errorClass="error-banner" showDetail="true" showSummary="false" globalOnly="true"/>
+
+                <h:form id="form">
+                    <!-- Barre d'outils et configuration du rôle système -->
+                    <div class="toolbar-header">
+                        <p:outputLabel for="rolesysteme" value="Rôle du modèle : " styleClass="field-label"/>
+                        <p:selectOneMenu id="rolesysteme" value="#{bb.roleSysteme}" editable="true"
+                                         required="true" requiredMessage="Veuillez sélectionner un rôle système."
+                                         disabled="#{! bb.roleSystemeChangeable}">
+                            <f:selectItems value="#{bb.rolesSysteme}"/>
+                        </p:selectOneMenu>
+                        <h:message for="rolesysteme" errorStyle="color: #dc2626; font-size: 13px;" />
+
+                        <h:commandButton value="🔄 Nouvelle session" action="#{bb.nouveauChat}" styleClass="btn-action" />
+                    </div>
+
+                    <!-- Grille principale à deux colonnes : Saisie/Réponse à gauche et Historique à droite -->
+                    <h:panelGrid id="paneltotal" columns="2" columnClasses="topAligned,topAligned" style="width: 100%;">
+
+                        <!-- Colonne de gauche -->
+                        <h:panelGrid id="panelgauche" columns="1" style="width: 100%; padding-right: 15px;">
+                            <h:panelGrid id="questionetreponse" columns="1" style="width: 100%;">
+                                <!-- Zone de saisie de la question -->
+                                <div class="section-label-bar">
+                                    <span class="section-label">Votre question :</span>
+                                    <div>
+                                        <button type="button" onclick="copyToClipboard('question')" title="Copier la question">📋 Copier</button>
+                                        <button type="button" onclick="toutEffacer()" class="btn-danger" title="Effacer question et réponse">🗑️ Vider</button>
+                                    </div>
+                                </div>
+                                <h:inputTextarea id="question" value="#{bb.question}" title="Question"
+                                                 cols="50" rows="5" placeholder="Saisissez votre question ici..."/>
+
+                                <div style="margin: 10px 0 16px 0;">
+                                    <h:commandButton value="Envoyer la question 🚀" action="#{bb.envoyer}" styleClass="btn-primary"/>
+                                </div>
+
+                                <!-- Zone d'affichage du résultat retourné -->
+                                <div class="section-label-bar">
+                                    <span class="section-label">Réponse reçue :</span>
+                                    <button type="button" onclick="copyToClipboard('reponse')" title="Copier la réponse">📋 Copier</button>
+                                </div>
+                                <h:inputTextarea id="reponse" value="#{bb.reponse}" title="Réponse"
+                                                 cols="50" rows="12" readonly="true"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <!-- Colonne de droite : Historique global -->
+                        <h:panelGrid id="paneldroit" columns="1" style="width: 100%; padding-left: 15px; border-left: 1px solid #e2e8f0;">
+                            <div class="section-label-bar">
+                                <span class="section-label">Historique des échanges :</span>
+                                <button type="button" onclick="copyToClipboard('conversation')" title="Copier tout l'historique">📋 Copier conversation</button>
+                            </div>
+                            <h:inputTextarea id="conversation" rows="24" cols="50" readonly="true"
+                                             value="#{bb.conversation}" title="Conversation entière"/>
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </div>
+    </f:view>
+</h:body>
+</html>
